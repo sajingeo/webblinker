@@ -1,20 +1,13 @@
 #!/usr/bin/env python
-# Pulsates an LED connected to GPIO pin 1 with a suitable resistor 4 times using softPwm
-# softPwm uses a fixed frequency
-import wiringpi2
+import RPi.GPIO as GPIO
+import time
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(23,GPIO.OUT)
 
-OUTPUT = 1
-
-PIN_TO_PWM = 7
-
-wiringpi2.wiringPiSetup()
-wiringpi2.pinMode(PIN_TO_PWM,OUTPUT)
-wiringpi2.softPwmCreate(PIN_TO_PWM,0,100) # Setup PWM using Pin, Initial Value and Range parameters
-
+#print 'blink2'
 while(True):
-	for brightness in range(0,100): # Going from 0 to 100 will give us full off to full on
-		wiringpi2.softPwmWrite(PIN_TO_PWM,brightness) # Change PWM duty cycle
-		wiringpi2.delay(10) # Delay for 0.2 seconds
-	for brightness in reversed(range(0,100)):
-		wiringpi2.softPwmWrite(PIN_TO_PWM,brightness)
-		wiringpi2.delay(10)
+	GPIO.output(23,True)
+	time.sleep(2)
+	GPIO.output(23,False)
+	time.sleep(3)
+
